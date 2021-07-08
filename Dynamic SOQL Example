@@ -12,12 +12,11 @@ List<OrderItem> OrderItemList = Database.query('SELECT Id, AvailableQuantity, De
 System.debug(JSON.serializePretty(OrderItemList ));
 
 /*** SOQL String Usage Variation-2 ***/ 
-//NOT WORKING 
 String queryString ='SELECT Id, AvailableQuantity, Description, EndDate, ListPrice, OrderId, order.OrderNumber, order.ContractId, order.Account.Name, OrderItemNumber, OriginalOrderItemId, PricebookEntryId, Product2Id, Product2.Name, Quantity, ServiceDate, TotalPrice, UnitPrice FROM OrderItem where order.ContractId=:contractId and order.contract.status!=:contractStatus';
 
 //queryString=queryString + 'and order.status=:orderStatus and order.contract.OwnerExpirationNotice iN:sett';
-//queryString+='and quantity =:quantity and ServiceDate=:dt';
-queryString+='and quantity =:'+quantity+' and ServiceDate=:'+dt+';
+queryString+=' and ServiceDate=:dt';
+//queryString+=' and ServiceDate=:dt';
  
 List<OrderItem> OrderItemList = Database.query(queryString);
 System.debug(JSON.serializePretty(OrderItemList ));
