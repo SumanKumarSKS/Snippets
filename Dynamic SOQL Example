@@ -1,0 +1,23 @@
+/*** Variable Declaration ***/ 
+String contractId = '8005g00000097NPAAY';
+String contractStatus = 'Activated';
+String orderStatus ='Draft';
+String expirationNotice ='15';
+Set<String> sett = new Set<String>{'30'};
+Date dt = Date.newInstance(2021,07,08);
+Integer quantity =200;
+
+/*** SOQL String Variation-1 ***/ 
+List<OrderItem> OrderItemList = Database.query('SELECT Id, AvailableQuantity, Description, EndDate, ListPrice, OrderId, order.OrderNumber, order.ContractId, order.Account.Name, OrderItemNumber, OriginalOrderItemId, PricebookEntryId, Product2Id, Product2.Name, Quantity, ServiceDate, TotalPrice, UnitPrice FROM OrderItem where order.ContractId=:contractId and order.contract.status!=:contractStatus and order.statusCode=:orderStatus and order.contract.OwnerExpirationNotice iN:sett and quantity =:quantity and ServiceDate=:dt');
+System.debug(JSON.serializePretty(OrderItemList ));
+
+/*** SOQL String Usage Variation-2 ***/ 
+//NOT WORKING 
+String queryString ='SELECT Id, AvailableQuantity, Description, EndDate, ListPrice, OrderId, order.OrderNumber, order.ContractId, order.Account.Name, OrderItemNumber, OriginalOrderItemId, PricebookEntryId, Product2Id, Product2.Name, Quantity, ServiceDate, TotalPrice, UnitPrice FROM OrderItem where order.ContractId=:contractId and order.contract.status!=:contractStatus';
+
+//queryString=queryString + 'and order.status=:orderStatus and order.contract.OwnerExpirationNotice iN:sett';
+//queryString+='and quantity =:quantity and ServiceDate=:dt';
+queryString+='and quantity =:'+quantity+' and ServiceDate=:'+dt+';
+ 
+List<OrderItem> OrderItemList = Database.query(queryString);
+System.debug(JSON.serializePretty(OrderItemList ));
