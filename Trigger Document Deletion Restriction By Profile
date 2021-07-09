@@ -1,0 +1,15 @@
+if(trigger.isBefore){
+        if(trigger.isdelete){
+            String UserId = UserInfo.getUserId();//Returns the context user's ID.
+            System.Debug('UserId-' + UserId);
+            String ProfileId = UserInfo.getProfileId();//Returns the context user's profile ID.
+            System.Debug('ProfileId-' + ProfileId);
+            ContentDocumentLink_Validation_Rule__c mc = ContentDocumentLink_Validation_Rule__c.getInstance(ProfileId);
+             System.Debug('Custom setting-' + mc.Restrict_File_Deletion_By_Sales__c);
+            for(ContentDocumentLink c : Trigger.new){
+                if(!mc.Restrict_File_Deletion_By_Sales__c){
+                    c.addError('You do not have privilege to delete Legal documents');
+                }
+            }
+        }
+    }
