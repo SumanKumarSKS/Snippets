@@ -1,0 +1,22 @@
+public class ContentDownloadHandlerFactory implements Sfc.ContentDownloadHandlerFactory { 
+    public Sfc.ContentDownloadHandler getContentDownloadHandler(List<ID> ids, Sfc.ContentDownloadContext context) {
+        Sfc.ContentDownloadHandler contentDownloadHandler = new Sfc.ContentDownloadHandler();
+        // Suman -005c0000006mwIdAAI
+        // Rajendra 005c0000006nOxEAAU
+        System.debug('APEX ContentDocument Id : ' + JSON.serializePretty(ids));
+        List<contentVersion > contentDocumentToBeDeleted = [SELECT Id,FileType from contentVersion where id in:ids and FileType='WORD_X' ];
+        if(contentDocumentToBeDeleted.size()>0){
+            for(contentVersion cv :contentDocumentToBeDeleted ){
+                if(UserInfo.getProfileId()== '00ec0000000IT4gAAG') {
+                    //if(UserInfo.getUserId()== '005c0000006mwIdAAI') { 
+                    System.debug('APEX File Download Restrictions');
+                    contentDownloadHandler.isDownloadAllowed = false;
+                    contentDownloadHandler.downloadErrorMessage = 'Downloading a file is not allowed.';
+                    return contentDownloadHandler;
+                }
+            }
+        }
+        contentDownloadHandler.isDownloadAllowed = true;
+        return contentDownloadHandler;
+    }
+}
