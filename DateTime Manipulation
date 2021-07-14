@@ -1,0 +1,11 @@
+DateTime startDate = DateTime.newInstance(2021,7,14,3,0,0);
+DateTime endDate = DateTime.newInstance(2021,7,15,0,0,0);
+
+Decimal minutes = Integer.valueOf((endDate.getTime() - startDate.getTime())/(1000*60));
+System.debug('Minutes : ' + minutes);
+
+Decimal hours = Integer.valueOf((DateTime.Now().getTime() - startDate.getTime())/(1000*60*60));
+System.debug('Hours : ' + hours);
+
+Decimal days = Integer.valueOf((endDate.getTime() - startDate.getTime())/(1000*60*60*24));
+System.debug('Days : ' + days);
